@@ -1,0 +1,98 @@
+/* ./assets/css/main.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'TCCC-UnityText';
+  src: url('../fonts/TCCCUnity-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'TCCC-UnityText';
+  src: url('../fonts/TCCCUnity-Black.ttf');
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: 'TCCC-UnityText';
+  src: url('../fonts/TCCCUnity-Bold.ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'TCCC-UnityText';
+  src: url('../fonts/TCCCUnity-BoldItalic.ttf');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'TCCC-UnityText';
+  src: url('../fonts/TCCCUnity-Italic.ttf');
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'TCCC-UnityText';
+  src: url('../fonts/TCCCUnity-Light.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'TCCC-UnityText';
+  src: url('../fonts/TCCCUnity-Medium.ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'TCCC-UnityHeadline';
+  src: url('../fonts/TCCCUnityHead-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'TCCC-UnityHeadline';
+  src: url('../fonts/TCCCUnityHead-Black.ttf');
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: 'TCCC-UnityHeadline';
+  src: url('../fonts/TCCCUnityHead-Bold.ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'TCCC-UnityHeadline';
+  src: url('../fonts/TCCCUnityHead-Light.ttf');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'TCCC-UnityHeadline';
+  src: url('../fonts/TCCCUnityHead-Medium.ttf');
+  font-weight: 500;
+}
+
+.ball {
+  width: 13px;
+  height: 13px;
+  background: #fff;
+  position: absolute;
+  top: 250px;
+  left: 187px;
+  border-radius: 51px;
+  z-index: 2;
+  -webkit-animation: ball-y 2s;
+  -webkit-transform-origin: 50% 50%;
+  -moz-animation: ball-y 2s;
+  -moz-transform-origin: 50% 50%;
+}
+
+@-webkit-keyframes ball-y {
+  0% { -webkit-transform: translateY(-120px); -webkit-animation-timing-function: ease-in; }
+  28% { -webkit-transform: translateY(-60px); -webkit-animation-timing-function: ease-in; }
+  56% { -webkit-transform: translateY(-36px); -webkit-animation-timing-function: ease-in; }
+  84% { -webkit-transform: translateY(-25px); -webkit-animation-timing-function: ease-in; }
+  14%, 42%, 75% , 100% { -webkit-transform: translateY(0px); -webkit-animation-timing-function: ease-out; }
+}
