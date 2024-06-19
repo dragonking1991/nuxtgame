@@ -14,11 +14,14 @@
     "pinia": "^2.1.7",
     "swiper": "^11.0.7",
     "vue": "^3.4.21",
+    "vue-resize-directive": "^1.2.0",
     "vue-router": "^4.3.0",
     "vue3-lazy": "^1.0.0-alpha.1"
   },
   "devDependencies": {
     "@nuxt/image": "^1.5.0",
+    "@vueuse/core": "^10.10.0",
+    "@vueuse/nuxt": "^10.10.0",
     "autoprefixer": "^10.4.19",
     "nuxt": "^3.11.1",
     "postcss": "^8.4.38",

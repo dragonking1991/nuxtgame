@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   },
   css: ["~/assets/css/main.scss"],
   components: ["~/components"],
-  modules: ["@nuxt/image", "@pinia/nuxt"],
+  modules: ["@nuxt/image", "@vueuse/nuxt", "@pinia/nuxt"],
   pinia: {
     storesDirs: ["./stores/**", "./custom-folder/stores/**"],
   },

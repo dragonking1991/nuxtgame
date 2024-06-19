@@ -1,4 +1,4 @@
-export const useCounterStore = defineStore('counter', () => {
+export const useGameStore = defineStore('game', () => {
   const count = ref(0)
   const name = ref('Eduardo')
   const age = ref(1)
