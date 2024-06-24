@@ -14,7 +14,7 @@ export const drawEgg = (ctx, x = 20, y = 20, r = 10, color = "#523423") => {
 };
 
 
-export const drawRect = (ctx, x = 30, y = 30, h = 30, w = 30, color = "#523423") => {
+export const drawRect = (ctx, x = 30, y = 30, h = 100, w = 30, color = "#523423") => {
   ctx.beginPath();
   ctx.lineWidth = "10";
   ctx.rect(x, y, h, w);
@@ -32,7 +32,8 @@ export const drawBottle = (ctx, x = 30, y = 30) => {
 };
 
 export const checkCollision = (victim, target) => {
-  let dx = victim.x - Math.max(target.x, Math.min(victim.x, target.x + target.width))
-  let dy = victim.y - Math.max(target.y, Math.min(victim.y, target.y + target.height))
-  return (dx * dx + dy * dy) < (victim.radius * victim.radius)
+  let dx = victim.x - Math.max(target.x, Math.min(victim.x, target.x + target.w))
+  let dy = victim.y - Math.max(target.y, Math.min(victim.y, target.y + target.h))
+  console.log('checkCollision',victim.x, target.x, (dx * dx + dy * dy) , (victim.r * victim.r));
+  return (dx * dx + dy * dy) < (victim.r * victim.r)
 }

@@ -11,7 +11,7 @@ export const getRandom = (max, min = 0) => {
   const seed = now % (max + min + 1);
   return seed - min;
 }
-export const getRandomColor = () => {
+export const getRandomColorRGB = () => {
   const red = getRandom(255);
   const green = getRandom(255 - 1);
   const blue = getRandom(255 - 2);
