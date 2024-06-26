@@ -1,35 +1,29 @@
 <script setup>
 import { GamePlay } from "~/entities/CollectEggs/gamePlay";
 
-const setup = {
-  balls: 2,
-  stop: false,
-};
-
 const canvas = ref(null);
-const ctx = ref(null);
-const eggs = ref([]);
-const basket = ref(null);
 const game = ref(null);
 const keyPress = ref(null);
-
-const { elementX, isOutside } = useMouseInElement(canvas);
 const status = reactive({
   start: false,
   playing: false,
-  stop: false,
+  pausing: false,
   win: false,
   lose: false,
   score: 0,
+});
+
+const statusGame = computed(() => {
+  return game.value?.status;
 });
 
 const score = computed(() => {
   return game.value?.checkScore() || 0;
 });
 
-onMounted(() => {
-  ctx.value = canvas.value.getContext("2d");
+// const { elementX, isOutside } = useMouseInElement(canvas);
 
+onMounted(() => {
   useEventListener(document, "keydown", ({ key }) => {
     keyPress.value = key;
   });
@@ -38,17 +32,14 @@ onMounted(() => {
   });
 
   const gameConfig = {
-    canvas: canvas.value,
-    ctx: ctx.value,
-    canvas: canvas.value,
-    basket: basket.value,
-    eggs: eggs.value,
     status: status,
-    setup: setup,
+    canvas: canvas.value,
+    setup: {
+      balls: 2,
+      stop: false,
+    },
     interact: {
       keyPress,
-      elementX,
-      isOutside,
     },
   };
 
@@ -61,8 +52,8 @@ onMounted(() => {
 <template>
   <div class="overflow-hidden w-screen h-screen relative">
     <canvas ref="canvas"></canvas>
-    <GameControl
-      :status="status"
+    <GameCollectEggsControl
+      :status="statusGame"
       @start="game.start()"
       @replay="game.replay()"
       @stop="game.stop()"

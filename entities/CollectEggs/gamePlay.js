@@ -3,34 +3,33 @@ import { Egg } from "./egg"
 
 export class GamePlay {
   constructor(config) {
-    this.ctx = config.ctx
-    this.eggs = config.eggs
-    this.setup = config.setup
-    this.status = config.status
-    this.basket = config.basket
     this.canvas = config.canvas
-    this.score = config.status.score
+    this.ctx = this.canvas?.getContext("2d");
+    this.basket = null
+    this.eggs = []
+    this.eggRadius = config.setup.eggRadius || 20
+    this.status = config.status
+    this.setup = config.setup
     this.keyPress = config.interact.keyPress
     this.elementX = config.interact.elementX
     this.isOutside = config.interact.isOutside
   }
 
+  checkScore() { return this.basket?.collected.length || 0 }
+
   initEggs() {
     for (let index = 0; index < this.setup.balls; index++) {
       const config = {
-        x: Math.random() * 500 + 50,
+        id: index,
+        x: getRandomFloat(this.canvas.width - this.eggRadius * 2, this.eggRadius),
         y: 0,
-        r: 20,
+        r: this.eggRadius,
         color: getRandomColor(),
-        speed: (this.canvas.height / 100) * 0.5,
+        gravity: (this.canvas.height / 100) * 0.8,
       };
       this.eggs = [...this.eggs, new Egg(config)];
     }
   };
-
-  checkScore() {
-    return this.basket?.collected.length || 0
-  }
 
   initBasket() {
     const basketW = 100;
@@ -40,7 +39,7 @@ export class GamePlay {
       y: this.canvas.height - basketH,
       w: basketW,
       h: basketH,
-      speed: this.canvas.width / 10 * .2
+      speed: this.canvas.width / 100 * .7
     };
     this.basket = new Basket(basketConfig);
   };
@@ -53,21 +52,21 @@ export class GamePlay {
 
   update() {
     this.refreshCanvas();
-    if (!this.status.playing) return;
-
-    this.moveEggs();
-    this.moveBasket();
-
-    this.eggs[0]?.draw(this.ctx);
-    this.basket.draw(this.ctx);
-
-    if (this.eggs.length === 0 && !this.status.win) {
-      this.status.lose = true;
+    if (!this.eggs.length) {
       this.status.playing = false;
-    } else if (!this.eggs.length) {
-      this.status.win = true;
-      this.status.playing = false;
+
+      if (this.checkScore < 8) {
+        this.status.lose = true;
+      } else {
+        this.status.win = true;
+      }
+      return;
     } else {
+      this.moveEggs();
+      this.moveBasket();
+
+      this.eggs[0]?.draw(this.ctx);
+      this.basket.draw(this.ctx);
       !this.setup.stop && window.requestAnimationFrame(() => {
         this.update()
       });
@@ -83,28 +82,23 @@ export class GamePlay {
     this.keyPress === "ArrowLeft" && this.basket.moveLeft()
   };
 
-  updateEgg() {
-    const [collectedEgg, ...remainEgg] = this.eggs;
-    this.basket.collect(collectedEgg);
-    this.eggs = [...remainEgg];
-  };
-
   moveEggs() {
-    if (this.eggs[0]) {
-      if (this.eggs[0].isCollision(this.basket)) {
-        this.updateEgg()
-        this.score = this.checkScore();
-      } else {
-        if (this.eggs[0].y <= this.canvas.height) {
-          this.eggs[0].y += this.eggs[0].speed;
-        } else {
-          this.updateEgg()
-        }
-      }
-    } else {
+    const [activeEgg, ...remainEgg] = this.eggs;
 
+    if (activeEgg) {
+
+      if (this.basket.isCollision(activeEgg)) {
+        this.basket.isValidCollision(activeEgg)
+          ? this.basket.collect(activeEgg)
+          : activeEgg.fallout()
+      }
+
+      activeEgg.y <= this.canvas.height
+        ? activeEgg.moveDown()
+        : this.eggs = [...remainEgg];
     }
   };
+
   start() {
     this.initEggs();
     this.initBasket();
@@ -116,8 +110,8 @@ export class GamePlay {
     this.status.win = false;
     this.status.lose = false;
     this.score = 0;
-    eggs.value = [];
-    basket.value.collected = [];
+    this.eggs = [];
+    this.basket.collected = [];
     this.start();
   };
 

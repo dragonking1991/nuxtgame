@@ -5,6 +5,9 @@ export const getOrientation = (event) => {
     gamma: event.gamma,
   }
 };
+export const getRandomFloat = (min, max) => {
+  return Math.random() * (max - min + 1) + min;
+}
 
 export const getRandom = (max, min = 0) => {
   const now = new Date().getTime();

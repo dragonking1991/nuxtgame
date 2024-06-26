@@ -1,3 +1,3 @@
 <template>
-  <GameScreen/>
+  <GameCollectEggsScreen/>
 </template>
