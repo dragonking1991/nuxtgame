@@ -1,6 +1,3 @@
-
-
-
 <template>
-  <GamePacman />
+  <GameCollectEggs/>
 </template>

@@ -8,7 +8,7 @@
   </FormButton>
 
   <FormButton
-    v-if="lose && win"
+    v-if="lose || win"
     @click="$emit('replay')"
     class="absolute bottom-5 left-[50%] translate-x-[-50%]"
   >
