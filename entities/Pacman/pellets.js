@@ -5,6 +5,7 @@ export class Pellets {
     this.board = config.board
     this.ctx = config.ctx
     this.list = []
+
     for (let y = 0; y < this.board.length; y++) {
       for (let x = 0; x < this.board[y].length; x++) {
         if (this.board[y][x] === 0) {

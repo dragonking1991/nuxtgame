@@ -39,7 +39,7 @@ export class GamePlay {
 
   animate() {
     if (this.frameControl.stop) return;
-    !this.setup.stop && requestAnimationFrame(() => { this.animate() });
+    !this.setup.stop && !this.status.stop && requestAnimationFrame(() => { this.animate() });
     this.frameControl.now = Date.now();
     this.frameControl.elapsed = this.frameControl.now - this.frameControl.then;
     if (this.frameControl.elapsed > this.frameControl.fpsInterval) {
@@ -72,7 +72,8 @@ export class GamePlay {
   };
 
   moveHero(key) {
-    this.hero.move(key);
+    this.hero.move(key,this.pellets?.list);
+    !this.pellets?.list.length && (this.status.win = true)
   }
 
   update() {
@@ -82,6 +83,7 @@ export class GamePlay {
       if (!ghost.isCollisions(this.hero)) {
         ghost.move()
       } else {
+        this.status.stop = true
         this.status.lose = true
         this.status.playing = false
       }
@@ -98,6 +100,7 @@ export class GamePlay {
   start() {
     this.init()
     this.status.playing = true;
+    this.status.stop = false;
     this.startAnimating(60)
   };
 

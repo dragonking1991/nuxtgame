@@ -1,4 +1,3 @@
-
 export class Ghost {
   constructor(config) {
     this.x = config.x
