@@ -11,15 +11,18 @@ export class Ghost {
   }
 
   draw() {
-    this.ctx.beginPath();
-    this.ctx.arc((this.x + 0.5) * this.cellSize, (this.y + 0.5) * this.cellSize, this.cellSize / 2, 0, Math.PI * 2);
-    this.ctx.fillStyle = this.color;
-    this.ctx.fill();
+    drawCircle({
+      ctx: this.ctx,
+      x: (this.x + 0.5) * this.cellSize,
+      y: (this.y + 0.5) * this.cellSize,
+      r: this.cellSize / 2,
+      color: this.color
+    })
   }
 
   move() {
     const directions = ['up', 'down', 'left', 'right'];
-    const randomDirection = directions[Math.floor(Math.random() * directions.length)];
+    const randomDirection = directions[~~(Math.random() * directions.length)];
 
     let nextX = this.x
     let nextY = this.y

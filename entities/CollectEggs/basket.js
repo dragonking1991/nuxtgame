@@ -18,17 +18,11 @@ export class Basket {
   }
 
   draw(ctx) {
-    ctx.beginPath()
-    ctx.rect(this.x, this.y, this.w, this.h)
-    ctx.fillStyle = this.color
-    ctx.fill()
-    ctx.closePath()
+    drawObj({ ctx, ...this })
   }
 
   isCollision(target) {
-    let dx = target.x - Math.max(this.x, Math.min(target.x, this.x + this.w))
-    let dy = target.y - Math.max(this.y, Math.min(target.y, this.y + this.h))
-    return (dx * dx + dy * dy) < (target.r * target.r)
+    return checkCollision(this, target)
   }
 
   isValidCollision(target) {

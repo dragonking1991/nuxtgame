@@ -51,6 +51,7 @@ export class GamePlay {
   startAnimating(fps) {
     this.frameControl.fpsInterval = 1000 / fps;
     this.frameControl.then = Date.now();
+    this.init()
     this.animate();
   };
 
@@ -98,7 +99,6 @@ export class GamePlay {
   }
 
   start() {
-    this.init()
     this.status.playing = true;
     this.status.stop = false;
     this.startAnimating(60)
@@ -109,20 +109,9 @@ export class GamePlay {
     this.status.win = false;
     this.status.lose = false;
     this.score = 0;
+    this.ghosts = [];
+    this.hero = null;
     this.start();
   }
 
-  stop() {
-    this.status.stop = true;
-    window.cancelAnimationFrame(() => {
-      this.update()
-    });
-  };
-
-  play() {
-    this.status.stop = false;
-    window.requestAnimationFrame(() => {
-      this.update()
-    });
-  };
 }

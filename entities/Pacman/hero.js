@@ -9,10 +9,13 @@ export class Hero {
   }
 
   draw() {
-    this.ctx.beginPath();
-    this.ctx.arc((this.x + 0.5) * this.cellSize, (this.y + 0.5) * this.cellSize, this.cellSize / 2, 0, Math.PI * 2);
-    this.ctx.fillStyle = 'yellow';
-    this.ctx.fill();
+    drawCircle({
+      ctx: this.ctx,
+      x: (this.x + 0.5) * this.cellSize,
+      y: (this.y + 0.5) * this.cellSize,
+      r: this.cellSize / 2,
+      color: 'yellow'
+    })
   }
 
   move(key, pellets) {
@@ -41,10 +44,10 @@ export class Hero {
     }
   }
 
-  collectPellet(pellets){
+  collectPellet(pellets) {
     const pelletIndex = pellets.findIndex(pellet => pellet.x === this.x && pellet.y === this.y);
     if (pelletIndex !== -1) {
-      this.collected = [ ...this.collected, pellets.splice(pelletIndex, 1)];
+      this.collected = [...this.collected, pellets.splice(pelletIndex, 1)];
     }
   }
 }
