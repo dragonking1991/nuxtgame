@@ -8,6 +8,8 @@ export class Ghost {
     this.ctx = config.ctx
     this.board = config.board
     this.cellSize = config.cellSize
+    this.moveCounter = 0
+    this.moveInterval = 18
   }
 
   draw() {
@@ -21,6 +23,11 @@ export class Ghost {
   }
 
   move() {
+    this.moveCounter++;
+    if (this.moveCounter % this.moveInterval !== 0) {
+      return;
+    }
+
     const directions = ['up', 'down', 'left', 'right'];
     const randomDirection = directions[~~(Math.random() * directions.length)];
 

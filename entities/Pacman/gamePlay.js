@@ -36,6 +36,26 @@ export class GamePlay {
     this.hero = new Hero({ ...this.setup.hero, ...structure })
     this.pellets = new Pellets({ ...structure })
   }
+  update() {
+    this.refreshCanvas();
+    this.updateCell()
+    this.ghosts.forEach(ghost => {
+      if (!ghost.isCollisions(this.hero)) {
+        ghost.move()
+      } else {
+        this.status.stop = true
+        this.status.lose = true
+        this.status.playing = false
+      }
+    });
+
+    this.board.draw();
+    this.hero.draw();
+    this.ghosts.forEach(ghost => {
+      ghost.draw()
+    })
+    this.pellets.draw()
+  }
 
   animate() {
     if (this.frameControl.stop) return;
@@ -75,27 +95,6 @@ export class GamePlay {
   moveHero(key) {
     this.hero.move(key,this.pellets?.list);
     !this.pellets?.list.length && (this.status.win = true)
-  }
-
-  update() {
-    this.refreshCanvas();
-    this.updateCell()
-    this.ghosts.forEach(ghost => {
-      if (!ghost.isCollisions(this.hero)) {
-        ghost.move()
-      } else {
-        this.status.stop = true
-        this.status.lose = true
-        this.status.playing = false
-      }
-    });
-
-    this.board.draw();
-    this.hero.draw();
-    this.ghosts.forEach(ghost => {
-      ghost.draw()
-    })
-    this.pellets.draw()
   }
 
   start() {
